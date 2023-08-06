@@ -12,3 +12,4 @@
 ```
 ### Add comments about some consequences, eg. when test is set to skip, because it needs an hour to run.
 ### Adding TODO comments is okay - but remember to go thorugh them and do the work from time to time.
+### It's good to add comments when writing public API 
