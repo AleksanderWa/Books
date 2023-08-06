@@ -14,3 +14,4 @@
 ### Adding TODO comments is okay - but remember to go thorugh them and do the work from time to time.
 ### It's good to add comments when writing public API 
 ### All comments that require going through some different system places to understand it are BAD
+### Never leave commented code - people won't have enough courage to delete it. It will probably stay there forever / or long time
