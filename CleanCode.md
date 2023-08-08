@@ -15,3 +15,27 @@
 ### It's good to add comments when writing public API 
 ### All comments that require going through some different system places to understand it are BAD
 ### Never leave commented code - people won't have enough courage to delete it. It will probably stay there forever / or long time
+
+## Error handling
+### Use try catch instead of if else if possible
+Separate algorithm logic from error handling:  
+
+```
+public void sendShutDown() {
+  try {
+    tryToShutDown();
+  } catch (DeviceShutDownError e) {
+    logger.log(e);
+}
+private void tryToShutDown() throws DeviceShutDownError {
+  // ..
+}
+```
+
+### Write try - catch - finally first
+Write test that force exceptions and add behavior to satisfy your test.  
+try catch are like transactions
+
+### Bring context by using exceptions
+Exceptions should have context about error. They should carry enought information.
+
