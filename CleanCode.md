@@ -39,3 +39,26 @@ try catch are like transactions
 ### Bring context by using exceptions
 Exceptions should have context about error. They should carry enought information.
 
+### Defining class to handle exceptions
+It could be beneifcial to declare class only to handle multiple exceptions from e.g. external library.
+E.g:  
+```
+public class LocalPort{
+// ..
+public LocalPort(int portNumber) {
+ innerPort = new ACMEPort(portNumber);
+}
+public void open() {
+ try{
+innerPort.open();
+} catch (DeviceResponseException e) {
+ throw new PortDeviceFailure(e);
+} catch (ATM1212UnlockedException e) {
+ throw new PortDeviceFailure(e);
+} catch (GMXError e) {
+ throw new PortDeviceFailure(e);
+}
+
+}
+}
+```
