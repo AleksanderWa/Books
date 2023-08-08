@@ -32,6 +32,7 @@ private void tryToShutDown() throws DeviceShutDownError {
 }
 ```
 
+
 ### Write try - catch - finally first
 Write test that force exceptions and add behavior to satisfy your test.  
 try catch are like transactions
@@ -41,24 +42,47 @@ Exceptions should have context about error. They should carry enought informatio
 
 ### Defining class to handle exceptions
 It could be beneifcial to declare class only to handle multiple exceptions from e.g. external library.
-E.g:  
+Example:  
 ```
-public class LocalPort{
+public class LocalPort {
 // ..
 public LocalPort(int portNumber) {
  innerPort = new ACMEPort(portNumber);
 }
 public void open() {
  try{
-innerPort.open();
-} catch (DeviceResponseException e) {
- throw new PortDeviceFailure(e);
-} catch (ATM1212UnlockedException e) {
- throw new PortDeviceFailure(e);
-} catch (GMXError e) {
- throw new PortDeviceFailure(e);
+ innerPort.open();
+ } catch (DeviceResponseException e) {
+  throw new PortDeviceFailure(e);
+ } catch (ATM1212UnlockedException e) {
+  throw new PortDeviceFailure(e);
+ } catch (GMXError e) {
+  throw new PortDeviceFailure(e);
+ }
+}
+}
+```
+### Define normal flow
+We could use SPECIAL CASE PATTERN to handle special case for us.
+Example:
+```
+try {
+  MealExpenses expenses = expenseReportDAO.getMeals(employee.getID());
+  m_total += expenses.getTotal();
+} catch(MealExpensesNotFound e) {
+  m_total += getMealPerDiem();
+}
+```
+We could move catching exception to expenseReportDAO class and when that happens we return getTotal() from newly created class:
+```
+MealExpenses expenses = expenseReportDAO.getMeals(employee.getID());
+m_total += expenses.getTotal();
+// the Exception is handled in the DAO and getMails returns
+// PerDiemMealExpenses if an error is thrown...
+public class PerDiemMealExpenses implements MealExpenses {
+ public int getTotal() {
+ // return the per diem default
+ }
 }
 
-}
-}
 ```
