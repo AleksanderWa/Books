@@ -86,3 +86,23 @@ public class PerDiemMealExpenses implements MealExpenses {
 }
 
 ```
+
+### Don't return Null / None (Python)
+It creates unnecessary issues like "None type object ..."  
+Egxample:
+method returns Null, so we have to check if it's != null, that created additional logic:
+```
+List<Employee> employees = getEmployees();
+if (employees != null) {
+  for(Employee e : employees) {
+    totalPay += e.getPay();
+  }
+}
+```
+Instead we can change getEmployess() method to return empty list instead of Null:
+```
+List<Employee> employees = getEmployees();
+for(Employee e : employees) {
+  totalPay += e.getPay();
+}
+```
