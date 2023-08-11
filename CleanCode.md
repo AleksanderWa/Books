@@ -89,7 +89,7 @@ public class PerDiemMealExpenses implements MealExpenses {
 
 ### Don't return Null / None (Python)
 It creates unnecessary issues like "None type object ..."  
-Egxample:
+Example:
 method returns Null, so we have to check if it's != null, that created additional logic:
 ```
 List<Employee> employees = getEmployees();
@@ -104,5 +104,20 @@ Instead we can change getEmployess() method to return empty list instead of Null
 List<Employee> employees = getEmployees();
 for(Employee e : employees) {
   totalPay += e.getPay();
+}
+```
+
+### Don't pass Null as argument
+We should avoid passing Null to methods if that's possible. A Null argument is indication of a problem.
+One possible way could be to make assertions:
+Example:  
+```
+public class MetricsCalculator
+{
+ public double xProjection(Point p1, Point p2) {
+  assert p1 != null : "p1 nie może być null";
+  assert p2 != null : "p2 nie może być null";
+  return (p2.x - p1.x) * 1.5;
+ }
 }
 ```
