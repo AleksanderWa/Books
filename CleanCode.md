@@ -121,3 +121,11 @@ public class MetricsCalculator
  }
 }
 ```
+
+## Unit tests
+### 3 laws of TDD
+1st: You may not write production code until you have written a failing unit test. (first write failing unit tests)
+2nd: You may not write more of a unit test than is sufficient to fail, and not compiling is failing. (there are not more failing tests that could be written)  
+3rd: You may not write more production code than is sufficient to pass the currently failing test. (no more production code until you write more failing tests)  
+
+By doing this we are protecting us by writing many unit tests along with production code. Dozen tests a day, houndreds tests a month, thousands tests a year.
