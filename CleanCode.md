@@ -128,4 +128,54 @@ public class MetricsCalculator
 2nd: You may not write more of a unit test than is sufficient to fail, and not compiling is failing. (there are not more failing tests that could be written)  
 3rd: You may not write more production code than is sufficient to pass the currently failing test. (no more production code until you write more failing tests)  
 
-By doing this we are protecting us by writing many unit tests along with production code. Dozen tests a day, houndreds tests a month, thousands tests a year.
+By doing this we are protecting us by writing many unit tests along with production code. A dozen tests a day, hundreds tests a month, thousands tests a year.
+
+### Keep the tests clean
+Unit tests just like production code should be keep clean. When writing thuosands tests and not keeping them clean we create super complex system. Even small changes in that code will end up beign dreadful.  **Test code is just as important as production code**
+
+### Tests create more possibilities
+By having unit tests our production system is more flexible. We're not afraid of making changes, because of unit tests that protect us from production failure.  
+Tests are the key to keep system in the good shape.
+
+### Clean unit tests
+The test code must be designed to be read.  
+Example:
+```
+public void testGetPageHieratchyAsXml() throws Exception
+{
+	crawler.addPage(root, PathParser.parse("PageOne"));
+	crawler.addPage(root, PathParser.parse("PageOne.ChildOne"));
+	crawler.addPage(root, PathParser.parse("PageTwo"));
+
+	request.setResource("root");
+	request.addInput("type", "pages");
+	Responder responder = new SerializedPageResponder();
+	SimpleResponse response =
+		(SimpleResponse) responder.makeResponse(
+				new FitNesseContext(root), request);
+	String xml = response.getContent();
+
+	assertEquals("text/xml", response.getContentType());
+	assertSubString("<name>PageOne</name>", xml);
+	assertSubString("<name>PageTwo</name>", xml);
+	assertSubString("<name>ChildOne</name>", xml);
+}
+```
+After refactor:  
+```
+public void testGetPageHierarchyAsXml() throws Exception {
+	makePages("PageOne", "PageOne.ChildOne", "PageTwo");
+
+	submitRequest("root", "type:pages");
+
+	assertResponseIsXML();
+	assertResponseContains(
+			"<name>PageOne</name>", "<name>PageTwo</name>", "<name>ChildOne</name>"
+	);
+}
+```
+
+BUILD-OPERATE-CHECK pattern:  
+- Build: the first part builds up the test data.
+- Operate: the second part operates on that test data.
+- Check: the third part checks that the operation yielded the expected results
