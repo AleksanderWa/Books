@@ -2,12 +2,12 @@
 ## Comments
 ### It's better to create meaningful function / class property than adding comments  
 
- ```
+ ``` java
 // check if employee is eligible for full benefits  
  if ((employ.flags & HOURLY_FLAG) && (employee.age > 65))  
 ```
  VS  
- ```
+ ``` java
  if (employee.isEligibleForFullBenefits)
 ```
 ### Add comments about some consequences, eg. when test is set to skip, because it needs an hour to run.
@@ -20,7 +20,7 @@
 ### Use try catch instead of if else if possible
 Separate algorithm logic from error handling:  
 
-```
+``` java
 public void sendShutDown() {
   try {
     tryToShutDown();
@@ -43,7 +43,7 @@ Exceptions should have context about error. They should carry enought informatio
 ### Defining class to handle exceptions
 It could be beneifcial to declare class only to handle multiple exceptions from e.g. external library.
 Example:  
-```
+``` java
 public class LocalPort {
 // ..
 public LocalPort(int portNumber) {
@@ -65,7 +65,7 @@ public void open() {
 ### Define normal flow
 We could use SPECIAL CASE PATTERN to handle special case for us.
 Example:
-```
+``` java
 try {
   MealExpenses expenses = expenseReportDAO.getMeals(employee.getID());
   m_total += expenses.getTotal();
@@ -74,7 +74,7 @@ try {
 }
 ```
 We could move catching exception to expenseReportDAO class and when that happens we return getTotal() from newly created class:
-```
+``` java
 MealExpenses expenses = expenseReportDAO.getMeals(employee.getID());
 m_total += expenses.getTotal();
 // the Exception is handled in the DAO and getMails returns
@@ -91,7 +91,7 @@ public class PerDiemMealExpenses implements MealExpenses {
 It creates unnecessary issues like "None type object ..."  
 Example:
 method returns Null, so we have to check if it's != null, that created additional logic:
-```
+``` java
 List<Employee> employees = getEmployees();
 if (employees != null) {
   for(Employee e : employees) {
@@ -100,7 +100,7 @@ if (employees != null) {
 }
 ```
 Instead we can change getEmployess() method to return empty list instead of Null:
-```
+``` java
 List<Employee> employees = getEmployees();
 for(Employee e : employees) {
   totalPay += e.getPay();
@@ -111,7 +111,7 @@ for(Employee e : employees) {
 We should avoid passing Null to methods if that's possible. A Null argument is indication of a problem.
 One possible way could be to make assertions:
 Example:  
-```
+``` java
 public class MetricsCalculator
 {
  public double xProjection(Point p1, Point p2) {
@@ -140,7 +140,7 @@ Tests are the key to keep system in the good shape.
 ### Clean unit tests
 The test code must be designed to be read.  
 Example:
-```
+``` java
 public void testGetPageHieratchyAsXml() throws Exception
 {
 	crawler.addPage(root, PathParser.parse("PageOne"));
@@ -162,7 +162,7 @@ public void testGetPageHieratchyAsXml() throws Exception
 }
 ```
 After refactor:  
-```
+``` java
 public void testGetPageHierarchyAsXml() throws Exception {
 	makePages("PageOne", "PageOne.ChildOne", "PageTwo");
 
