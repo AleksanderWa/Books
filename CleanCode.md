@@ -179,3 +179,27 @@ BUILD-OPERATE-CHECK pattern:
 - Build: the first part builds up the test data.
 - Operate: the second part operates on that test data.
 - Check: the third part checks that the operation yielded the expected results
+
+### Dual standards
+In the code bellow it's hard to tell what tic function does. Reading assert is also not that easy, first checking state and then moving the the left and checking assert true or false. 
+
+``` java
+public void turnOnLoTempAlarmAtThreshold() throws Exception {
+	hw.setTemp(WAY_TO_COLD);
+	controller.tic();
+	assertTrue(hw.heaterState());
+	assertTrue(hw.blowerState());
+	assertTrue(hw.coolerState());
+	assertTrue(hw.hiTempAlarm());
+	assertTrue(hw.loTempAlaram());
+}
+```
+
+We can simply translates it into this:
+``` java
+public void turnOnLoTempAlarmAtThreshold() throws Exception {
+	wayToCold();
+	assertEquals("HBchL", hw.getState());
+}
+```
+capitalization in assert is used for ON / OFF. Capital letter means turned ON and lowercase means turned OFF.
