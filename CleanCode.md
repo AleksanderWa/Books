@@ -203,3 +203,6 @@ public void turnOnLoTempAlarmAtThreshold() throws Exception {
 }
 ```
 capitalization in assert is used for ON / OFF. Capital letter means turned ON and lowercase means turned OFF.
+
+### One assert per test
+## It's a good idea to keep number of asserts as little as possible.
